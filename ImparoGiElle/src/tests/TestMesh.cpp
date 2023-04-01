@@ -8,43 +8,75 @@ test::TestMesh::~TestMesh()
 {
 }
 
-test::TestMesh::TestMesh() : m_Camera(glm::vec3(0.0f))
+test::TestMesh::TestMesh() : m_Camera(glm::vec3(-4.0f, 1.0f, 1.0f))
 {
-
-    /*
-    float positions[] = {
-        2.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-        2.0f, 0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        2.0f, 1.0f, 1.0f,   0.0f, 1.0f, 0.0f,
-        2.0f, 1.0f, 0.0f,   0.0f, 1.0f, 0.0f
-    };
-
-    unsigned int indices[] = {
-        0, 1, 2,
-        2, 3, 0
-    };
-    */
-
     std::vector<Vertex> positions = {
-        {glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
-        {glm::vec3(2.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
-        {glm::vec3(2.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
-        {glm::vec3(2.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)}
+        //Front
+        {glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f, 0.0f, 0.0f)},
+        {glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f)},
+        {glm::vec3(0.0f, 1.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 0.0f)},
+        {glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(-1.0f, 0.0f, 0.0f)},
+
+        //Back
+        {glm::vec3(1.0f, 0.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f)},
+        {glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f)},
+        {glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f)},
+        {glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 0.0f, 0.0f)},
+
+        //Top
+        {glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
+        {glm::vec3(0.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
+        {glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
+        {glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)},
+
+        //Bottom
+        {glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)},
+        {glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)},
+        {glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)},
+        {glm::vec3(1.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)},
+
+        //Left
+        {glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)},
+        {glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)},
+        {glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)},
+        {glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)},
+
+        //Right
+        {glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)},
+        {glm::vec3(1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)},
+        {glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)},
+        {glm::vec3(0.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f)},
     };
     
     std::vector<unsigned int> indices = {
+        //Front
         0, 1, 2,
-        2, 3, 0
+        2, 3, 0,
+
+        //Back
+        4, 5, 6,
+        6, 7, 4,
+
+        //Top
+        8, 9, 10,
+        10, 11, 8,
+
+        //Bottom
+        12, 13, 14,
+        14, 15, 12,
+
+        //Left
+        16, 17, 18,
+        18, 19, 16,
+
+        //Right
+        20, 21, 22,
+        22, 23, 20
     };
 
     m_Mesh = std::make_unique<Mesh>(positions, indices);
 
     m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
-    m_VAO = std::make_unique<VertexArray>();
-    m_VBO = std::make_unique<VertexBuffer>(&positions[0], positions.size() * sizeof(Vertex));
-    m_VAO->AddBuffer(*m_VBO);
-    m_IBO = std::make_unique<IndexBuffer>(&indices[0], indices.size());
-
     m_Shader->Bind();
     m_Shader->SetUniform4f("u_Color", 0.9f, 0.8f, 0.8f, 1.0f);
 }
