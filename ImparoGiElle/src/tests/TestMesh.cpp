@@ -37,6 +37,8 @@ test::TestMesh::TestMesh() : m_Camera(glm::vec3(0.0f))
         2, 3, 0
     };
 
+    m_Mesh = std::make_unique<Mesh>(positions, indices);
+
     m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
     m_VAO = std::make_unique<VertexArray>();
     m_VBO = std::make_unique<VertexBuffer>(&positions[0], positions.size() * sizeof(Vertex));
@@ -89,7 +91,7 @@ void test::TestMesh::OnRender()
         glm::mat4 mvp = m_Camera.Proj() * m_Camera.View() * model;
         m_Shader->SetUniformMat4f("u_MVP", mvp);
 
-        renderer.Draw(*m_VAO, *m_IBO, *m_Shader);
+        renderer.Draw(*m_Mesh, *m_Shader);
     }
 }
 

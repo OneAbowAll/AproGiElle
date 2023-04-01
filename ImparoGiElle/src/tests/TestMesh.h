@@ -8,6 +8,7 @@
 #include "glm/glm.hpp"
 
 #include "Renderer.h"
+#include "Mesh.h"
 #include "Camera.h"
 #include "Input.h"
 
@@ -25,6 +26,7 @@ namespace test {
 	private:
 		Camera m_Camera;
 
+		std::unique_ptr<Mesh> m_Mesh;
 		std::unique_ptr<VertexArray> m_VAO;
 		std::unique_ptr<VertexBuffer> m_VBO;
 		std::unique_ptr<IndexBuffer> m_IBO;

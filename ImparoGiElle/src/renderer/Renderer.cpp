@@ -1,6 +1,8 @@
 #include "Renderer.h"
 #include <iostream>
 
+#include "Mesh.h"
+
 void GLClearError()
 {
     while (glGetError() != GL_NO_ERROR);
@@ -29,4 +31,9 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     va.Bind();
     ib.Bind();
     GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::Draw(const Mesh& mesh, const Shader& shader) const
+{
+    Draw(mesh.m_VAO, mesh.m_IBO, shader);
 }
