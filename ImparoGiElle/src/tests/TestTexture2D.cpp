@@ -14,6 +14,7 @@ namespace test {
         :m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), 
         m_TranslationA(200, 200, 0), m_translationB(400, 200, 0)
     { 
+        /*
         float positions[] = {
             -50.0f, -50.0f, 0.0f, 0.0f,
              50.0f, -50.0f, 1.0f, 0.0f,
@@ -34,11 +35,7 @@ namespace test {
 
         m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float)); //4 vertici * 4 floats
 
-        VertexBufferLayout layout;
-        layout.Push<float>(2);
-        layout.Push<float>(2);
-
-        m_VAO->AddBuffer(*m_VertexBuffer, layout);
+        m_VAO->AddBuffer(*m_VertexBuffer);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
 
         m_Proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
@@ -48,6 +45,7 @@ namespace test {
 
         m_Texture = std::make_unique<Texture>("res/textures/Buffo.png");
         m_Shader->SetUniform1i("u_Texture", 0); //Perchè nella riga sopra abbiamo bindato allo slot 0
+        */
     }
 
     TestTexture2D:: ~TestTexture2D()
@@ -60,6 +58,7 @@ namespace test {
 
 	void TestTexture2D::OnRender()
 	{
+        /*
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -85,6 +84,7 @@ namespace test {
 
             renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
         }
+        */
         
 	}
 

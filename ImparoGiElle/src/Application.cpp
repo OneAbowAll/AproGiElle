@@ -21,8 +21,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_glfw.h"
 
-#include "tests/TestClearColor.h"
-#include "tests/TestTexture2D.h"
+#include "tests/TestMesh.h"
 
 int main(void)
 {
@@ -53,6 +52,9 @@ int main(void)
         std::cout << "Error!" << std::endl;
     }
 
+    if (glfwRawMouseMotionSupported())
+        glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+
     std::cout << glGetString(GL_VERSION) << std::endl;
 
     {
@@ -69,12 +71,7 @@ int main(void)
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
 
-        test::Test* currentTest = nullptr;
-        test::TestMenu* testMenu = new test::TestMenu(currentTest);
-        currentTest = testMenu;
-
-        testMenu->RegisterTest<test::TestClearColor>("Clear color");
-        testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
+        test::TestMesh meshTest;
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
@@ -86,21 +83,13 @@ int main(void)
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            
-            if (currentTest)
-            {
-                currentTest->OnUpdate(0.0f);
-                currentTest->OnRender();
 
-                ImGui::Begin("Test");
-                if (currentTest != testMenu && ImGui::Button("<-"))
-                {
-                    delete currentTest;
-                    currentTest = testMenu;
-                }
-                currentTest->OnImGuiRender();
-                ImGui::End();
-            }
+            meshTest.OnUpdate(window, 0.016f);
+            meshTest.OnRender();
+
+            ImGui::Begin("Debug");
+            meshTest.OnImGuiRender();
+            ImGui::End();
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -111,11 +100,6 @@ int main(void)
             /* Poll for and process events */
             glfwPollEvents();
         }
-
-        delete currentTest;
-
-        if (currentTest != testMenu)
-            delete testMenu;
     }
 
     ImGui_ImplOpenGL3_Shutdown();
